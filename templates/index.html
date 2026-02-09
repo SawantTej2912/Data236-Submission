@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Artist Liberty</title>
+  <link rel="stylesheet" href="/static/styles.css" />
+</head>
+<body>
+  <main class="container">
+    <header class="header">
+      <h1>Artist Liberty</h1>
+    </header>
+
+    <section class="card">
+      <!-- Search -->
+      <div class="row">
+        <form class="row-form" method="get" action="/">
+          <div class="field">
+            <label for="q">Search</label>
+            <input id="q" name="q" value="{{ q|default('') }}" placeholder="e.g., Harry" />
+          </div>
+          <button class="btn primary" type="submit">Search</button>
+          <a class="btn ghost" href="/">Clear</a>
+        </form>
+      </div>
+
+      <hr/>
+
+      <!-- Add -->
+      <h2 class="section-title">Add a book</h2>
+      <form class="grid" method="post" action="/add">
+        <div class="field">
+          <label for="title">Book Title</label>
+          <input id="title" name="title" placeholder="Enter title" required />
+        </div>
+        <div class="field">
+          <label for="author">Author Name</label>
+          <input id="author" name="author" placeholder="Enter author" required />
+        </div>
+        <button class="btn primary" type="submit">Add</button>
+      </form>
+
+      <hr/>
+
+      <!-- Actions -->
+      <div class="actions">
+        <div class="panel">
+          <h2 class="section-title">Update ID = 1</h2>
+          <form class="grid" method="post" action="/update1">
+            <div class="field">
+              <label>Title</label>
+              <input name="title" value="Harry Potter" required />
+            </div>
+            <div class="field">
+              <label>Author</label>
+              <input name="author" value="J.K Rowling" required />
+            </div>
+            <button class="btn primary" type="submit">Update</button>
+          </form>
+          <p class="hint">Sets book #1 to the required values.</p>
+        </div>
+
+        <div class="panel">
+          <h2 class="section-title">Delete</h2>
+          <form method="post" action="/delete_max">
+            <button class="btn danger" type="submit">Delete Highest ID</button>
+          </form>
+          <p class="hint">Removes the book with the max ID.</p>
+        </div>
+      </div>
+
+      <hr/>
+
+      <!-- List -->
+      <h2 class="section-title">Books</h2>
+
+      {% if books %}
+      <table class="book-table">
+        <thead>
+          <tr>
+            <th>Book ID</th>
+            <th>Book Title</th>
+            <th>Author</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for b in books %}
+          <tr>
+            <td class="col-id">{{ b.id }}</td>
+            <td class="col-title">{{ b.title }}</td>
+            <td class="col-author">{{ b.author }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      {% else %}
+        <div class="empty">No books found.</div>
+      {% endif %}
+
+    </section>
+  </main>
+</body>
+</html>
